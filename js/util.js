@@ -1,5 +1,5 @@
 'use strict'
-
+//creating the board
 function createBoard(size, mines) {
     const board = []
     for (let i = 0; i < size; i++) {
@@ -43,4 +43,41 @@ function copyMat(mat) {
         }
     }
     return newMat
+}
+
+// placing mines randomaly
+function placeMines(board, numMines) {
+    var minesPlaced = 0
+    while (minesPlaced < numMines) {
+        const i = Math.floor(Math.random() * board.length)
+        const j = Math.floor(Math.random() * board[0].length)
+        if (!board[i][j].isMine) {
+            board[i][j].isMine = true
+            minesPlaced++
+        }
+    }
+}
+
+//counting the neighboring mines
+function setMinesNegsCount(board) {
+    const numRows = board.length
+    const numCols = board[0].length
+
+    for (var i = 0; i < numRows; i++) {
+        for (var j = 0; j < numCols; j++) {
+            if (!board[i][j].isMine) {
+                var count = 0
+                // Check neighboring cells
+                for (var row = i - 1; row <= i + 1; row++) {
+                    for (var col = j - 1; col <= j + 1; col++) {
+                        if (row >= 0 && row < numRows && col >= 0 && col < numCols && board[row][col].isMine) {
+                            count++
+                        }
+                    }
+                }
+                board[i][j].minesAround = count
+            }
+        }
+    }
+    return board
 }
