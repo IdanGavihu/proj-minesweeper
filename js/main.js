@@ -174,9 +174,14 @@ function checkWin() {
 function gameOver(isWin) {
     gGame.isOn = false
     if (isWin) {
-        alert('ניצחת!')
+        alert('אליפות!')
     } else {
         revealAllMines()
         alert('איי את הפלי')
+        loseSound.play()
     }
+}
+
+function restartGame() {
+    onInit()
 }
